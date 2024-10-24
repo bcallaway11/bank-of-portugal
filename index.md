@@ -1,6 +1,6 @@
-# Difference-in-Differences Mini-Course at CDC
+# Difference-in-Differences Course at the Bank of Portugal
 
-These are the materials for my Difference-in-Differences lecture at the CDC on August 1, 2024.
+These are the materials for my Difference-in-Differences lecture at the Bank of Portugal, Oct. 28-31, 2024.
 
 ## Introduction to Difference-in-Differences
 
@@ -23,4 +23,4 @@ This is the main data used during the workshop.
 
 A main resource for the material from today's workshop is my DID chapter in the *Handbook of Labor, Human Resources, and Population Economics*.  The published (gated) version is available [here](https://link.springer.com/referenceworkentry/10.1007/978-3-319-57365-6_352-1).   The (ungated) draft version is available [here](https://bcallaway11.github.io/files/Callaway-Chapter-2022/main.pdf).
 
-The material for today's lecture is a subset of the material that I taught at LSU in the Spring of 2024.  The full set of materials for that course are available [here](https://github.com/bcallaway11/lsu-workshop).
+<!--The material for today's lecture is a subset of the material that I taught at LSU in the Spring of 2024.  The full set of materials for that course are available [here](https://github.com/bcallaway11/lsu-workshop). -->
