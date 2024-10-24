@@ -1,5 +1,7 @@
 ---
 title: ""
+layout: default
+theme: minima
 ---
 
 # Difference-in-Differences Course at the Bank of Portugal
