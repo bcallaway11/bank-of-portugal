@@ -1,3 +1,7 @@
+---
+title: ""
+---
+
 # Difference-in-Differences Course at the Bank of Portugal
 
 These are the materials for my Difference-in-Differences lecture at the Bank of Portugal, Oct. 28-31, 2024.
