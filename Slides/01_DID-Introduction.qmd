@@ -1,12 +1,12 @@
 ---
-title: "Difference-in-Differences"
-subtitle: "Recent Methodological Advances and their Relevance to Empirical Work"
+title: "Modern Approaches to Difference-in-Differences"
+subtitle: "Session 1: Introduction to Difference-in-Differences"
 format: clean-revealjs
 author:
   - name: Brantly Callaway
 email: brantly.callaway@uga.edu
 affiliations: University of Georgia
-date: August 1, 2024
+date: Oct. 28-31, 2024
 bibliography: refs.bib
 knitr:
   opts_chunk:
@@ -47,9 +47,11 @@ $\newcommand{\E}{\mathbb{E}}
 
 2. Relaxing the Parallel Trends Assumption
 
-3. Dealing with More Complicated Treatment Regimes
+3. Common Extensions for Empirical Work
 
-4. Alternative Identification Strategies
+4. Dealing with More Complicated Treatment Regimes
+
+5. Alternative Identification Strategies
 
 
 <!--
@@ -66,7 +68,7 @@ $\newcommand{\E}{\mathbb{E}}
 
 ## Additional Resources
 
-<span class="alert">Additional Workshop Materials: </span> [https://bcallaway11.github.io/CDC/](https://bcallaway11.github.io/CDC/)
+<span class="alert">Additional Workshop Materials: </span> [https://bcallaway11.github.io/bank-of-portugal/](https://bcallaway11.github.io/bank-of-portugal/)
 
   * Slides, code, data, etc. <!--for the workshop-->
 
@@ -79,6 +81,7 @@ $\newcommand{\E}{\mathbb{E}}
 
   * Baker, Callaway, Cunningham, Goodman-Bacon, Sant'Anna (2024), draft posted very soon
 
+<!--
 
 . . .
 
@@ -90,6 +93,7 @@ $\newcommand{\E}{\mathbb{E}}
 
   * Alternative identification strategies (e.g., conditioning on lagged outcome, change-in-changes, others)
 
+-->
 
 # Part 1: Introduction to Difference-in-Differences {visibility="uncounted"}
 

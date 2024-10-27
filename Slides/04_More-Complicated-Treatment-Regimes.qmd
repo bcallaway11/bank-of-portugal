@@ -1,6 +1,6 @@
 ---
 title: "Modern Approaches to Difference-in-Differences"
-subtitle: "Session 3: More Complicated Treatment Regimes"
+subtitle: "Session 4: More Complicated Treatment Regimes"
 format: clean-revealjs
 author:
   - name: Brantly Callaway
@@ -48,7 +48,7 @@ However, this certainly does not cover the full range of possible treatments.  I
 
 A couple of things to notice as we go along:
 
-* I'm not going to cover much on TWFE regressions here.  They have even more sources of things that can go wrong.  
+* I'm not going to cover much on TWFE regressions here.  They have even more sources of things that can go wrong.
 
 * Try to pay attention to the pattern.  Even though the arguments are getting more complicated, we are still following the idea of (i) target disaggregated parameters, (ii) combine them into lower dimensional objects, (3) here there will be some additional interpretation issues that are worth emphasizing
 
@@ -71,7 +71,7 @@ Potential outcomes notation
 - Two time periods: $t=2$ and $t=1$
   - No one treated until period $t=2$
   - Some units remain untreated in period $t=2$
-  
+
 - Potential outcomes: $Y_{i,t=2}(d)$
 
 - Observed outcomes: $Y_{i,t=2}$ and $Y_{i,t=1}$
@@ -97,7 +97,7 @@ $$ATT(d|d) := \E[Y_{i,t=2}(d) - Y_{i,t=2}(0) | D_i=d]$$
 [Slope Effects]{.alert} (Average Causal Response on the Treated)
 
 $$ACRT(d|d) := \frac{\partial ATT(l|d)}{\partial l} \Big|_{l=d}$$
-  
+
 * Interpretation: $ACRT(d|d)$ is the causal effect of a marginal increase in dose *local to units that actually experienced dose $d$*
 
 ## Aggregated Parameters
@@ -180,7 +180,7 @@ oftentimes, our theory will have implications about effects at different values 
 :::
 
 . . .
-  
+
 * Average causal response parameters *inherently* involve comparisons across slightly different doses
 
 . . .
@@ -217,7 +217,7 @@ after <- "\n
 
 * Implication: If you want to interpret differences in treatment effects across different doses, then you will need stronger assumptions than standard parallel trends
 
-* This problem spills over into identifying $ACRT(d|d)$ 
+* This problem spills over into identifying $ACRT(d|d)$
 
 . . .
 
@@ -270,7 +270,7 @@ $$\mathbb{E}[Y_{i,t=2}(d) - Y_{i,t=1}(0) | D_i=l] = \mathbb{E}[Y_{i,t=2}(d) - Y_
 * This is notably different from "Standard" Parallel Trends
 
 * It involves potential outcomes for all values of the dose (not just untreated potential outcomes)
-  
+
 * All dose groups would have experienced the same path of outcomes had they been assigned the same dose
 
 :::
@@ -282,7 +282,7 @@ title <- "Introduce Stronger Assumptions"
 
 before <- "
 
-Strong parallel trends implies a version of treatment effect homogeneity.  Notice: 
+Strong parallel trends implies a version of treatment effect homogeneity.  Notice:
 
 "
 
@@ -290,7 +290,7 @@ eqlist <- list("ATT(d|d) &= \\E[Y_{i,t=2}(d) - Y_{i,t=2}(0) | D_i=d] \\hspace{20
                "&= \\E[Y_{i,t=2}(d) - Y_{i,t=1}(0) | D_i=d] - \\E[Y_{i,t=2}(0) - Y_{i,t=1}(0) | D_i=d] \\",
                "&= \\E[Y_{i,t=2}(d) - Y_{i,t=1}(0) | D_i=l] - \\E[Y_{i,t=2}(0) - Y_{i,t=1}(0) | D_i=l] \\",
                "&= \\E[Y_{i,t=2}(d) - Y_{i,t=2}(0) | D_i=l] = ATT(d|l)")
-    
+
 after <- "
 
 . . .
@@ -330,7 +330,7 @@ before <- "ATE-type parameters do not suffer from the same issues as ATT-type pa
 eqlist <- list("ATE(d_h) - ATE(d_l) &= \\E[Y_{i,t=2}(d_h) - Y_{i,t=2}(0)] - \\E[Y_{i,t=2}(d_l) - Y_{i,t=2}(0)]",
               "&= \\underbrace{\\E[Y_{i,t=2}(d_h) - Y_{i,t=2}(d_l)]}_{\\textrm{Causal Response}}")
 
-after <- " 
+after <- "
 
 . . .
 
@@ -449,7 +449,7 @@ Other issues can arise in more complicated cases
 
 We can make a lot of progress by redefining our notion of a "group"
 
-* Keep track of entire treatment regime $\mathbf{D}_i := (D_{i,1}, \ldots, D_{i,T})'$ and/or treatment history up to period $t$: $\mathbf{D}_{i,t} := (D_{i,1}, \ldots, D_{i,t})'$. 
+* Keep track of entire treatment regime $\mathbf{D}_i := (D_{i,1}, \ldots, D_{i,T})'$ and/or treatment history up to period $t$: $\mathbf{D}_{i,t} := (D_{i,1}, \ldots, D_{i,t})'$.
 
 * Potential outcomes $Y_{i,t}(\mathbf{d}_t)$ where $\mathbf{d}_t$ is some treatment history up to period $t$ (this notation imposes "no anticipation" &mdash; potential outcomes do not depend on future treatments).  Observed outcomes: $Y_{i,t}(\mathbf{D}_{i,t})$
 
@@ -457,7 +457,7 @@ We can make a lot of progress by redefining our notion of a "group"
 
 :::
 
-## Units can move in and out of the treatment 
+## Units can move in and out of the treatment
 
 
 In this case, we'll define groups by their treatment histories $\mathbf{d}_t$.  Thus, we can consider group-time average treatment effects defined by
@@ -465,7 +465,7 @@ In this case, we'll define groups by their treatment histories $\mathbf{d}_t$.  
   ATT(\mathbf{d}_t, t) := \E[Y_{i,t}(\mathbf{d}_t) - Y_{i,t}(\mathbf{0}_t) | \mathbf{D}_{i,t} = \mathbf{d}_t]
 \end{align*}
 
-## Units can move in and out of the treatment 
+## Units can move in and out of the treatment
 
 ::: {.callout-note}
 
@@ -493,27 +493,27 @@ This argument is straightforward and analogous to what we have done before.  <sp
 
 :::
 
-## Units can move in and out of the treatment 
+## Units can move in and out of the treatment
 
 There are a number of additional complications that arise here.
 
 1. There are way more possible groups here than in the staggered treatment case (you can think of this as leading to a kind of curse of dimensionality)
 
     * $\implies$ small groups $\implies$ imprecise estimates and (possibly) invalid inferences
-    
+
     * also makes it harder to report the results
-    
+
 ::: {.fragment}
 
-2. The previous point provides an additional reason to try to aggregate the group-time average treatment effects.  However, this is also not so straightforward.  
+2. The previous point provides an additional reason to try to aggregate the group-time average treatment effects.  However, this is also not so straightforward.
 
    * This is an area of active research (e.g., @chaisemartin-dhaultfoeuille-2023a and @yanagi-2022)
-   
+
    * Some ideas below...but the literature has not converged here yet (nor is it clear if it can converge)
-   
+
 :::
 
-## Units can move in and out of the treatment 
+## Units can move in and out of the treatment
 
 Probably the simplest approach is to just make "timing groups" on the basis of the first period when a unit experiences the treatment
 
@@ -523,7 +523,7 @@ Probably the simplest approach is to just make "timing groups" on the basis of t
 
 * Formally, it amounts to averaging over all subsequent treatments decisions (@chaisemartin-dhaultfoeuille-2023a)
 
-In math: Define $M_i := \min\{t : D_{i,t} = 1\}$, then we can consider the (timing-group)-time average treatment effects: 
+In math: Define $M_i := \min\{t : D_{i,t} = 1\}$, then we can consider the (timing-group)-time average treatment effects:
 $$ATT(m,t) := \E[Y_{i,t}(\mathbf{D}_{i,t}) - Y_{i,t}(\mathbf{0}_t) | M_i = m]$$
 
 * If the treatment were staggered, these would be exactly the group-time average treatment effects discussed earlier
@@ -543,7 +543,7 @@ $$\tau_{i,t} = Y_{i,t}(\mathbf{d}_t) - Y_{i,t}(\mathbf{0}_t)$$-->
 $$\bar{\tau}_i = \frac{1}{C_i} \sum_{t=2}^{T} D_{i,t} \big(Y_{i,t}(\mathbf{D}_{i,t}) - Y_{i,t}(\mathbf{0}_t) \big)$$
   This is the average treatment effect for unit $i$ in all the periods that it was treated
 
-* Overall average treatment effect: 
+* Overall average treatment effect:
 $$ATT^o := \E[\bar{\tau}_i | \mathbf{D}_i \neq \mathbf{0}_t]$$
 
 * Can show that this is a different weighted average of $ATT(\mathbf{d}_t, t)$.
@@ -565,11 +565,11 @@ which is the average treatment effect (in the last period) among those units tha
 
 <!--
 
-## Units can move in and out of the treatment 
+## Units can move in and out of the treatment
 
-Define $\sigma_t(\mathbf{d}_t) := \displaystyle \sum_{s=1}^t d_s$ 
+Define $\sigma_t(\mathbf{d}_t) := \displaystyle \sum_{s=1}^t d_s$
 
-* $\sigma_t(\cdot)$ is a function that adds up the cumulative number of treatments up to period $t$ for treatment history $\mathbf{d}_t$.  
+* $\sigma_t(\cdot)$ is a function that adds up the cumulative number of treatments up to period $t$ for treatment history $\mathbf{d}_t$.
 
 ::: {.fragment}
 
@@ -612,7 +612,7 @@ This is tricky though because the composition of the effective groups changes ov
 :::
 
 
-An alternative idea is to just report treatment effect parameters in the last period: $ATT^{sum}(\sigma,T)$ as a function of $\sigma$.  
+An alternative idea is to just report treatment effect parameters in the last period: $ATT^{sum}(\sigma,T)$ as a function of $\sigma$.
 
 * This would be something that you could report in a two-dimensional plot
 
@@ -657,10 +657,10 @@ library(ggplot2)
 treated_state_list <- unique(subset(data2, G != 0)$state_name)
 
 plot_df <- unique(select(subset(data2, G != 0), state_name, state_mw, year))
-ggplot(plot_df, aes(x=year, y=state_mw, color=state_name)) + 
+ggplot(plot_df, aes(x=year, y=state_mw, color=state_name)) +
   geom_line(linewidth=1.2) +
-  geom_point(size=1.5) + 
-  ylim(c(5.15,7.00)) + 
+  geom_point(size=1.5) +
+  ylim(c(5.15,7.00)) +
   theme_bw()
 ```
 
@@ -677,7 +677,7 @@ load("post_res.RData")
 ggplot(post_res, aes(x=year, y=attst, color=state)) +
   geom_line(linewidth=1.2) +
   geom_point(size=1.5) +
-  ylim(c(-.2,.05)) + 
+  ylim(c(-.2,.05)) +
   theme_bw()
 
 ```
@@ -728,7 +728,7 @@ There is variation in the amount of the minimum wage across states and time peri
 * Idea: collapse this by reporting $ATT$'s per dollar increase in the minimum wage in the current period for a particular state
   * This gives a decrease in employment per dollar in each time period
   * This is "well defined" but our results could easily be misinterpreted if, say, results were mainly driven dynamics
-  
+
 * $ATT$'s per dollar by state and time get us essentially back to the staggered treatment adoption setting
   * we can report event studies (per dollar) and an overall $ATT$ (per dollar)
 
@@ -741,9 +741,9 @@ There is variation in the amount of the minimum wage across states and time peri
 ```{r echo=FALSE}
 ggplot(post_res, aes(x=year, y=attst.per, color=state)) +
   geom_line(linewidth=1.2) +
-  geom_point(size=1.5) + 
-  ylim(c(-.2,.05)) + 
-  theme_bw() 
+  geom_point(size=1.5) +
+  ylim(c(-.2,.05)) +
+  theme_bw()
 ```
 
 ## Event Study per Dollar
@@ -759,13 +759,13 @@ for (e in 0:3) {
 }
 
 ggplot(data.frame(es_att=es_att, es_se=es_se, e=0:3),
-       aes(x=e, y=es_att)) + 
-  geom_line(color="steelblue", linewidth=1.2) + 
-  geom_point(size=1.5, color="steelblue") + 
+       aes(x=e, y=es_att)) +
+  geom_line(color="steelblue", linewidth=1.2) +
+  geom_point(size=1.5, color="steelblue") +
   geom_line(aes(y=es_att+1.96*es_se), linetype="dashed") +
-  geom_line(aes(y=es_att-1.96*es_se), linetype="dashed") + 
-  ylim(c(-.2, .05)) + 
-  theme_bw() 
+  geom_line(aes(y=es_att-1.96*es_se), linetype="dashed") +
+  ylim(c(-.2, .05)) +
+  theme_bw()
 ```
 
 ::: {.fragment}
@@ -782,7 +782,7 @@ Using new, heterogeneity-robust approaches typically requires customized approac
 
 In my view, this is a feature of new approaches (rather than a weakness).  As researchers, I think we should grapple with complexity of the problems that we are studying
 
-* In all likelihood, if you run a TWFE regression, it is going to give you some kind of weighted average of underlying treatment effect parameters (with hard to understand/interpret weights).  
+* In all likelihood, if you run a TWFE regression, it is going to give you some kind of weighted average of underlying treatment effect parameters (with hard to understand/interpret weights).
 
 . . .
 
@@ -808,7 +808,7 @@ My goal in this section is to provide at least a recipe for dealing with complic
 * [Conditioning on some covariates]{.alert} could make strong parallel trends more plausible.
 
   * For length of school closure, strong parallel trends probably more plausible conditional on being a rural county in the Southeast or conditional on being a college town in the Midwest.
-  
+
 [[Back](#additional-comments)]
 
 ## Positive Side-Comments: No untreated units {#no-untreated-units visibility="uncounted"}
@@ -816,11 +816,11 @@ My goal in this section is to provide at least a recipe for dealing with complic
 It's possible to do some versions of DID with a continuous treatment without having access to a fully untreated group.
 
 * In this case, it is not possible to recover level effects like $ATT(d|d)$.
-  
+
 * However, notice that $$\begin{aligned}& \E[\Delta Y_i | D_i=d_h] - \E[\Delta Y_i | D_i=d_l] \\ &\hspace{50pt}= \Big(\E[\Delta Y_i | D_i=d_h] - \E[\Delta Y_i(0) | D_i=d_h]\Big) - \Big(\E[\Delta Y_i | D_i=d_l]-\E[\Delta Y_i(0) | D_i=d_l]\Big) \\ &\hspace{50pt}= ATT(d_h|d_h) - ATT(d_l|d_l)\end{aligned}$$
-  
+
 * In words: comparing path of outcomes for those that experienced dose $d_h$ to path of outcomes among those that experienced dose $d_l$ (and not relying on having an untreated group) delivers the difference between their $ATT$'s.
-  
+
 * Still face issues related to selection bias / strong parallel trends though
 
 [[Back](#additional-comments)]
@@ -830,14 +830,14 @@ It's possible to do some versions of DID with a continuous treatment without hav
 Strategies like binarizing the treatment can still work (though be careful!)
 
 * If you classify units as being treated or untreated, you can recover the $ATT$ of being treated at all.
-  
+
 * On the other hand, if you classify units as being "high" treated, "low" treated, or untreated &mdash; our arguments imply that selection bias terms can come up when comparing effects for "high" to "low"
 
 [[Back](#additional-comments)]
 
 ## Negative Side-Comment: Pre-testing {#pre-testing visibility="uncounted"}
 
-That the expressions for $ATE(d)$ and $ATT(d|d)$ are exactly the same also means that we cannot use pre-treatment periods to try to distinguish between "standard" and "strong" parallel trends. 
+That the expressions for $ATE(d)$ and $ATT(d|d)$ are exactly the same also means that we cannot use pre-treatment periods to try to distinguish between "standard" and "strong" parallel trends.
 In particular, the relevant information that we have for testing each one is the same
 
 * In effect, the only testable implication of strong parallel trends in pre-treatment periods is standard parallel trends.
@@ -866,7 +866,7 @@ Hospital reported data from the American Hospital Association, yearly from 1980-
 
 Outcome is capital/labor ratio
 
-* proxy using the depreciation share of total operating expenses (avg. 4.5%) 
+* proxy using the depreciation share of total operating expenses (avg. 4.5%)
 
 * our setup: collapse to two periods by taking average in pre-treatment periods and average in post-treatment periods
 
@@ -895,11 +895,11 @@ Dose is "exposure" to the policy
 
 ## Results {visibility="uncounted"}
 
-<center> <img src="table_est_blank.png" width=70% /> </center> 
+<center> <img src="table_est_blank.png" width=70% /> </center>
 
 ## Results {visibility="uncounted"}
 
-<center> <img src="table_est_results.png" width=70% /> </center> 
+<center> <img src="table_est_results.png" width=70% /> </center>
 
 
 ## Density weights vs. TWFE weights {visibility="uncounted"}
@@ -918,7 +918,7 @@ Dose is "exposure" to the policy
 
 There are other additional assumptions that could be attractive in applications like this
 
-1. Notice that above, we only invoked parallel trends with respect to untreated potential outcomes. 
+1. Notice that above, we only invoked parallel trends with respect to untreated potential outcomes.
 
     But it seems within the spirit of DID to assume [parallel trends for staying at the same treatment over time]{.alert}
     * Then we can recover group-time average treatment effects for switchers relative to stayers
@@ -934,10 +934,10 @@ There are other additional assumptions that could be attractive in applications 
 
 2. Assumptions that [limit the "memory" of potential outcomes]{.alert} could be attractive in some applications
 
-    * e.g., $Y_{i,t}(\mathbf{d}_t) = Y_{i,t}(\mathbf{d}_{t-5:t})$ &mdash; potential outcomes only depend on treatments in the last 5 periods 
-    
+    * e.g., $Y_{i,t}(\mathbf{d}_t) = Y_{i,t}(\mathbf{d}_{t-5:t})$ &mdash; potential outcomes only depend on treatments in the last 5 periods
+
     * this allows pooling across treatment histories
-    
+
     * could increase the size of the comparison group
 
 ## Possible Additional Assumptions {visibility="uncounted"}
@@ -947,9 +947,9 @@ There are other additional assumptions that could be attractive in applications 
 3. Assumptions that [limit treatment effect dynamics]{.alert} could be attractive in some applications
 
     For example, if a unit has been treated for 5 years in a row, then their trend in outcomes over time goes back to being the same as the trend in untreated potential outcomes (though the level could still be affected by the treatment)
-    
+
     I think this is what event studies that bin the endpoints have in mind
-    
+
     This allows those units with a "steady" treatment to eventually re-enter the comparison group (and this is often a testable assumption)
 
 [[Back](#end-in-and-out)]
@@ -980,11 +980,11 @@ That is, you can recover $ATT^{switchers}$ by comparing the paths of outcomes fo
 
 ::: {.fragment}
 
-Given this sort of assumption, there may be a huge number of $ATT^{switchers}(\mathbf{d}_{t-1},t)$ in realistic applications.  
+Given this sort of assumption, there may be a huge number of $ATT^{switchers}(\mathbf{d}_{t-1},t)$ in realistic applications.
 
 * You could use these to further understand treatment effect heterogeneity
 
-* You could also propose some way to aggregate them into a lower dimensional argument 
+* You could also propose some way to aggregate them into a lower dimensional argument
 
 [[Back](#extensions)]
 

@@ -10,10 +10,63 @@ These are the materials for my Difference-in-Differences lecture at the Bank of 
 
 ## Introduction to Difference-in-Differences
 
-[[Slides](DID-Introduction.html)]
+[[Slides](01_DID-Introduction.html)]
 
-[[Code](DID-Introduction.R)]
+[[Code](01_DID-Introduction.R)]
 
+## Part 2: Including Covariates in the Parallel Trends Assumption
+
+[[Slides](02_Covariates.html)]
+
+[[Code](02_Relaxing-Parallel-Trends.R)] 
+
+## Coding Exercise 1
+
+Applying DID techniques from parts 1 and 2 to job displacement data.
+
+[[Problems](Exercises/Exercise-1/exercise1.html)]
+
+[[R Data](Exercises/Exercise-1/job_displacement_data.RData)] &nbsp; &nbsp; [[Stata dta](Exercises/Exercise-1/job_displacement_data.dta)]
+
+[[R Solutions](Exercises/Exercise-1/exercise1_sol.html)] &nbsp; &nbsp; [[Stata Solutions](Exercises/Exercise-1/exercise1_sol_stata.html)] (Stata solutions were written by [Kyle Butts](https://www.kylebutts.com/) for Mixtape Sessions)
+
+## Part 3: Common Extensions for Empirical Work 
+
+[[Slides](03_Extensions.html)]
+
+[[Code](03_Extensions.R)] &nbsp; &nbsp; [[Honest DID Code](honest_did.R)]
+
+## Part 4: More Complicated Treatment Regimes
+
+[[Slides](04_More-Complicated-Treatment-Regimes.html)]
+
+[[Code](04_More-Complicated-Treatment-Regimes.R)]
+
+## Coding Exercise 2
+
+DID with a continuous treatment using simulated hospital data.
+
+[[Problems](Exercises/Exercise-2/exercise2a.html)]
+
+[[R Data](Exercises/Exercise-2/medicare1.RData)] &nbsp; &nbsp; [[Stata dta](Exercises/Exercise-2/medicare1.dta)]
+
+[[R Solutions](Exercises/Exercise-2/exercise2a_sol.html)]
+
+## Part 5: Alternative Identification Strategies
+
+[[Slides](05_Alternative-Identification-Strategies.html)]
+
+[[Code](05_Alternative-Identification-Strategies.R)]
+
+## Coding Exercise 3
+
+Applying alternative identification strategies to job displacement data.
+
+[Problems](Exercises/Exercise-2/exercise2b.html)
+
+Data - same as Coding Exercise 1
+
+[R Solutions](Exercises/Exercise-2/exercise2b_sol.html)
 
 ## Minimum Wage Data
 

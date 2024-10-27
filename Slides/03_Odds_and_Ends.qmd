@@ -1,0 +1,279 @@
+---
+title: "Modern Approaches to Difference-in-Differences"
+subtitle: "Session 3: Common Extensions for Empirical Work"
+format: clean-revealjs
+author:
+  - name: Brantly Callaway
+    email: brantly.callaway@uga.edu
+    affiliations: University of Georgia
+knitr:
+  opts_chunk:
+    echo: true
+bibliography:
+  - refs.bib
+  - labor_refs.bib
+---
+
+```{r echo=FALSE}
+library(revealEquations)
+```
+
+## Outline
+
+## Outline
+
+1. Introduction to Difference-in-Differences
+
+2. Including Covariates in the Parallel Trends Assumption
+
+3. [Common Extensions for Empirical Work]{.alert}
+
+4. Dealing with More Complicated Treatment Regimes
+
+5. Alternative Identification Strategies
+
+
+## Plan: Common Extensions for Empirical Work
+
+<br>
+
+1. Alternative Comparison Groups
+
+2. Anticipation
+
+3. Alternative Base Periods
+
+4. Dealing with Violations of Parallel Trends
+
+5. Clustered Standard Errors
+
+6. Repeated Cross Sections
+
+7. Unbalanced Panel Data
+
+# Part 1: Dealing with Violations of Parallel Trends {visibility="uncounted"}
+
+## What about violations of parallel trends?
+
+Parallel trends assumptions don't automatically hold in applications with repeated observations over time (we will discuss this in Session 4 in more detail)
+
+* The most common "response" is pre-testing...checking if parallel trends holds in pre-treatment periods
+
+DID + pre-tests are a very powerful/useful approach to "validating" the parallel trends assumption.  But they are less than a full test of parallel trends.
+
+* Just because parallel trends holds in pre-treatment periods doesn't mean it holds in post-treatment periods
+
+* Pre-tests can suffer from low power (@roth-2022)
+
+## What about our case?
+
+```{r echo=FALSE}
+attgt <- did::att_gt(yname="lemp",
+                     idname="id",
+                     gname="G",
+                     tname="year",
+                     data=data2,
+                     control_group="nevertreated",
+                     base_period="universal")
+```
+
+```{r echo=FALSE}
+ggdid(aggte(attgt,type="dynamic",cband=FALSE))
+```
+
+---
+
+
+
+## Partial Identification / Sensitivity Analysis
+
+References: @manski-pepper-2018, @rambachan-roth-2023
+
+Two versions of sensitivity analysis in RR:
+
+1. Violations of parallel trends are "not too different" in post-treatment periods from the violations in pre-treatment periods
+    * Allow for violations of parallel trends up to $\bar{M}$ times as large as were observed in any pre-treatment period.
+    * And we'll vary $\bar{M}$.
+
+2. Violations of parallel trends evolve smoothly
+    * Allow for linear trend up to $M$ times as large as linear trend difference in pre-treatment periods.
+    * We'll vary $M$
+
+Next slides: show these results in minimum wage application for the "on impact" effect of the treatment
+
+## What about violations of parallel trends?
+
+```{r, echo=FALSE, cache=TRUE, fig.align="center", fig.width=14, fig.height=8, message=FALSE, warning=FALSE}
+# devtools::install_github("asheshrambachan/HonestDiD")
+library(HonestDiD)
+source("honest_did.R")
+cs_es <- aggte(attgt, type="dynamic")
+hd_cs <- honest_did(es=cs_es,
+                    e=0,
+                    type="relative_magnitude")
+createSensitivityPlot_relativeMagnitudes(hd_cs$robust_ci,
+                                         hd_cs$orig_ci)
+```
+
+## What about violations of parallel trends?
+
+```{r, echo=FALSE, cache=TRUE, fig.align="center", fig.width=14, fig.height=8, message=FALSE, warning=FALSE}
+hd_cs <- honest_did(es=cs_es,
+                    e=0,
+                    type="smoothness")
+createSensitivityPlot(hd_cs$robust_ci,
+                      hd_cs$orig_ci)
+```
+
+
+## Side Results
+
+Show some other things that you can do that may be relevant in applications (though not related to including covariates)
+
+1. Change the type of base period - "varying" vs. "universal"
+
+2. Change the comparison group - consider larger comparison groups such as not-yet-treated
+
+3. Allow for anticipation
+
+## Change base period
+
+```{r eval=FALSE}
+#| code-line-numbers: "|8"
+# callaway and sant'anna including covariates
+cs_x <- att_gt(yname="lemp",
+               tname="year",
+               idname="id",
+               gname="G",
+               xformla=~region + lpop + lavg_pay,
+               control_group="nevertreated",
+               base_period="varying",
+               est_method="dr",
+               data=data2)
+cs_x_res <- aggte(cs_x, type="group")
+summary(cs_x_res)
+cs_x_dyn <- aggte(cs_x, type="dynamic")
+ggdid(cs_x_dyn)
+```
+
+
+
+## Change base period
+
+```{r echo=FALSE}
+cs_x <- att_gt(yname="lemp",
+               tname="year",
+               idname="id",
+               gname="G",
+               xformla=~region + lpop + lavg_pay,
+               control_group="nevertreated",
+               base_period="varying",
+               est_method="dr",
+               data=data2)
+cs_x_res <- aggte(cs_x, type="group")
+summary(cs_x_res)
+```
+
+## Change base period
+
+```{r echo=FALSE}
+cs_x_dyn <- aggte(cs_x, type="dynamic")
+ggdid(cs_x_dyn)
+```
+
+## Change comparison group
+
+```{r eval=FALSE}
+#| code-line-numbers: "|7"
+# callaway and sant'anna including covariates
+cs_x <- att_gt(yname="lemp",
+               tname="year",
+               idname="id",
+               gname="G",
+               xformla=~region + lpop + lavg_pay,
+               control_group="notyettreated",
+               base_period="universal",
+               est_method="dr",
+               data=data2)
+cs_x_res <- aggte(cs_x, type="group")
+summary(cs_x_res)
+cs_x_dyn <- aggte(cs_x, type="dynamic")
+ggdid(cs_x_dyn)
+```
+
+
+
+## Change comparison group
+
+```{r echo=FALSE}
+cs_x <- att_gt(yname="lemp",
+               tname="year",
+               idname="id",
+               gname="G",
+               xformla=~region + lpop + lavg_pay,
+               control_group="notyettreated",
+               base_period="universal",
+               est_method="dr",
+               data=data2)
+cs_x_res <- aggte(cs_x, type="group")
+summary(cs_x_res)
+```
+
+## Change comparison group
+
+```{r echo=FALSE}
+cs_x_dyn <- aggte(cs_x, type="dynamic")
+ggdid(cs_x_dyn)
+```
+
+## Allow for anticipation
+
+```{r eval=FALSE}
+#| code-line-numbers: "|10"
+# callaway and sant'anna including covariates
+cs_x <- att_gt(yname="lemp",
+               tname="year",
+               idname="id",
+               gname="G",
+               xformla=~region + lpop + lavg_pay,
+               control_group="nevertreated",
+               base_period="universal",
+               est_method="dr",
+               anticipation=1,
+               data=data2)
+cs_x_res <- aggte(cs_x, type="group")
+summary(cs_x_res)
+cs_x_dyn <- aggte(cs_x, type="dynamic")
+ggdid(cs_x_dyn)
+```
+
+
+
+## Allow for anticipation
+
+```{r echo=FALSE}
+cs_x <- att_gt(yname="lemp",
+               tname="year",
+               idname="id",
+               gname="G",
+               xformla=~region + lpop + lavg_pay,
+               control_group="nevertreated",
+               base_period="universal",
+               est_method="dr",
+               anticipation=1,
+               data=data2)
+cs_x_res <- aggte(cs_x, type="group")
+summary(cs_x_res)
+```
+
+## Allow for anticipation
+
+```{r echo=FALSE}
+cs_x_dyn <- aggte(cs_x, type="dynamic")
+ggdid(cs_x_dyn)
+```
+
+# References {visibility="uncounted"}
+
+::: {#refs}
+:::

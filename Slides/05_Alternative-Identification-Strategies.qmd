@@ -1,6 +1,6 @@
 ---
 title: "Modern Approaches to Difference-in-Differences"
-subtitle: "Session 4: Alternative Identification Strategies"
+subtitle: "Session 5: Alternative Identification Strategies"
 format: clean-revealjs
 author:
   - name: Brantly Callaway
@@ -53,7 +53,7 @@ $\newcommand{\E}{\mathbb{E}}
 
 . . .
 
-We have been following the [high-level strategy]{.alert-blue} of (1) targeting disaggregated parameters and then (2) combining them.  
+We have been following the [high-level strategy]{.alert-blue} of (1) targeting disaggregated parameters and then (2) combining them.
 
 . . .
 
@@ -82,13 +82,13 @@ We have been following the [high-level strategy]{.alert-blue} of (1) targeting d
 * For example, if you have extra pre-treatment periods, you can assess validity in pre-treatment periods
 
 . . .
-   
+
 But this is certainly not the only possibility:
 
   * In some disciplines (e.g., biostats) it is relatively more common to assume unconfoundedness conditional on lagged outcomes (i.e., the LOU approach)
-  
+
   * This is also what my undergraduate econometrics students almost always suggest (their judgement is not clouded by having thought about these things too much)
-  
+
   * Or, alternatively, why not take two differences (closely related to linear trends models) or even more...
 
 In my view, these seem like fair points
@@ -101,7 +101,7 @@ In my view, these seem like fair points
 \end{align*}
 where $\eta_i$ is unobserved heterogeneity and $e_{i,t}$ are idiosyncratic unobservables (you can add observed covariates if you want)
 
-. . . 
+. . .
 
 The parallel trends assumption comes from using the same sort of model, but layering on the additional functional form assumption
 
@@ -138,7 +138,7 @@ before <- "
 
 $$\\E[Y_{i,t=2}(0) | Y_{i,t=1}(0), D_i=1] = \\E[Y_{i,t=2}(0) | Y_{i,t=1}(0), D_i=0]$$
 
-::: 
+:::
 
 [Explanation:]{.alert} On average, untreated potential outcomes in the 2nd period are the same for the treated group as for the untreated group conditional on having the same pre-treatment outcome
 
@@ -152,7 +152,7 @@ after <- "
 
 $\\implies ATT$ is identified can be recovered by the difference in the average outcome for the treated group relative to the average outcome condional on lag for untreated group (this is averaged over the distribution of pre-treatment outcomes for the treated group)"
 
-eqlist <- list("ATT &= \\E[Y_{i,t=2} | D_i=1] - \\E[Y_{i,t=2}(0) | D_i=1] \\hspace{250pt}", 
+eqlist <- list("ATT &= \\E[Y_{i,t=2} | D_i=1] - \\E[Y_{i,t=2}(0) | D_i=1] \\hspace{250pt}",
                "&= \\E[Y_{i,t=2} | D_i=1] - \\E\\Big[\\E[ Y_{i,t=2}(0) | Y_{i,t=1}(0), D_i=1] \\big| D_i=1\\Big]",
                "&=\\E[Y_{i,t=2} | D_i=1] - \\E\\Big[\\E[ Y_{i,t=2}(0) | Y_{i,t=1}(0), D_i=0] \\big| D_i=1\\Big]")
 
@@ -164,7 +164,7 @@ step_by_step_eq(eqlist=eqlist,
 
 ## LO Unconfoundedness Estimation
 
-Recall under LO unconfoundedness assumption: 
+Recall under LO unconfoundedness assumption:
 $$ATT=\E[Y_{i,t=2} | D_i=1] - \E\Big[\underbrace{\E[ Y_{i,t=2}(0) | Y_{i,t=1}(0), D_i=0]}_{\textrm{challenging to estimate}} | D_i=1\Big]$$
 
 . . .
@@ -210,7 +210,7 @@ Applying a similar argument as before recursively (and noting that to get this a
 #| code-line-numbers: "|1|2|3|5|10|11|12|13|14"
 devtools::install_github("bcallaway11/pte")
 library(pte)
-data2$G2 <- data2$G 
+data2$G2 <- data2$G
 # lagged outcomes identification strategy
 lo_res <- pte::pte_default(yname="lemp",
                            tname="year",
@@ -228,7 +228,7 @@ ggpte(lo_res)
 ## LO Unconfoundedness $ATT(g,t)$
 
 ```{r, fig.align="center", fig.width=7.5, fig.height=6, echo=FALSE, cache=TRUE, warning=FALSE}
-data2$G2 <- data2$G 
+data2$G2 <- data2$G
 # lagged outcomes identification strategy
 lo_res <- pte::pte_default(yname="lemp",
                            tname="year",
@@ -271,7 +271,7 @@ where $h_t$ is a nonparametric, time-varying function.  To me, it is helpful to 
 
 3. $h_t$ is stictly monotonically increasing $\implies$ we can invert it.
 
-4. Support condition: $\mathcal{U}_g \subseteq \mathcal{U}_0$ (support of $U_{i,t}$ for the treated group is a subset of the support of $U_{i,t}$ for the untreated group) 
+4. Support condition: $\mathcal{U}_g \subseteq \mathcal{U}_0$ (support of $U_{i,t}$ for the treated group is a subset of the support of $U_{i,t}$ for the untreated group)
 
 ::: {.notes}
 
@@ -279,7 +279,7 @@ where $h_t$ is a nonparametric, time-varying function.  To me, it is helpful to 
 
 2. is arguably similar
 
-3. is similar 
+3. is similar
 
 4. $\implies \textrm{support}(Y_{i,t}(0))$ for the treated group is a subset of the of the support of untreated potential outcomes for the untreated group.  This condition is not required for the DID (roughly: no extrapolation here, this could be a good thing or not...; DID can have fundamentally different groups in terms of $\eta_i$, but not here)
 
@@ -324,7 +324,7 @@ Because these are different transformations, DID and CIC are non-nested approach
 
 ## Comments
 
-CIC is a nice approach in many applications 
+CIC is a nice approach in many applications
 
 * In addition, to recovering $ATT(g,t)$, it is also possible to recover <span class="highlight">quantile treatment effect parameters</span> in this setting (these can allow you to more effectively study treatment effect heterogeneity and are closely related to social welfare calculations/comparisons)
 
@@ -349,7 +349,7 @@ Though it is less commonly used in empirical work than DID.
 devtools::install_github("bcallaway11/qte")
 library(qte)
 # change-in-changes
-cic_res <- qte::cic2(yname="lemp", 
+cic_res <- qte::cic2(yname="lemp",
                      gname="G2",
                      tname="year",
                      idname="id",
@@ -372,7 +372,7 @@ $\widehat{ATT}^o = -0.059$, $\textrm{s.e}(\widehat{ATT}^o) = 0.009$.  (This is v
 ```{r, echo=FALSE, cache=TRUE, fig.align="center", fig.width=4.5, fig.height=3, message=FALSE, warning=FALSE}
 # change-in-changes
 data2$G2 <- data2$G
-cic_res <- qte::cic2(yname="lemp", 
+cic_res <- qte::cic2(yname="lemp",
                      gname="G2",
                      tname="year",
                      idname="id",
@@ -386,7 +386,7 @@ ggpte(cic_res) + geom_hline(yintercept=0, size=1.2)
 
 ## Interactive Fixed Effects
 
-Earlier we discussed this model for untreated potential outcomes $Y_{i,t}(0) = h_t(\eta_i, e_{i,t})$ and argued that it was too general to make much progress on.  
+Earlier we discussed this model for untreated potential outcomes $Y_{i,t}(0) = h_t(\eta_i, e_{i,t})$ and argued that it was too general to make much progress on.
 
 . . .
 
@@ -407,7 +407,7 @@ In our context, though, it makes sense to interpret these as
 
 * $\lambda_i$ unobserved heterogeneity (e.g., individual's unobserved skill)
 
-* $F_t$ the time-varying "return" unobserved heterogeneity (e.g., return to skill) 
+* $F_t$ the time-varying "return" unobserved heterogeneity (e.g., return to skill)
 
 
 
@@ -539,13 +539,13 @@ There are a number of different ideas here:
 * Make additional assumptions ruling out serial correlation in $e_{i,t}$ $\implies$ can use lags of outcomes as instruments:
 
     * But this is seen as a strong assumption in many applications (@bertrand-duflo-mullainathan-2004)
-    
+
 . . .
-    
+
 * Alternatively can introduce covariates and make auxiliary assumptions about them (@callaway-karami-2023, @brown-butts-2023, @brown-butts-westerlund-2023)
 
 . . .
-    
+
 * However, it turns out that, with staggered treatment adoption, you can recover $ATT(3,3)$ essentially for free (@callaway-tsyawo-2023).
 
 
@@ -591,7 +591,7 @@ did::ggdid(sife_res$att_gt)
 
 ::: {.fragment}
 
-$\widehat{ATT}^o = -0.010$, $\textrm{s.e}(\widehat{ATT}^o) = 0.127$.  
+$\widehat{ATT}^o = -0.010$, $\textrm{s.e}(\widehat{ATT}^o) = 0.127$.
 
 :::
 
@@ -626,7 +626,7 @@ This section has emphasized alternative approaches to DID to recover disaggregat
 
 * Change-in-changes
 
-* Interactive fixed effects models  
+* Interactive fixed effects models
 
 We have targeted $ATT(g,t)$.  Moving to more aggregated treatment effect parameters such as $ATT^{es}(e)$ or $ATT^o$ is the same as before.
 
@@ -645,7 +645,7 @@ I want to emphasize the high-level thought process one last time for using/inven
 
 ## Conclusion
 
-<span class="highlight">Thank you</span> very much for having me!  
+<span class="highlight">Thank you</span> very much for having me!
 
 <br>
 
@@ -665,7 +665,7 @@ I want to emphasize the high-level thought process one last time for using/inven
 
 ## LOU Identification Explanation {#lou-identification-explanation visibility="uncounted"}
 
-Simplest possible non-trivial example: $ATT(g=2,t=3)$.  
+Simplest possible non-trivial example: $ATT(g=2,t=3)$.
 
 Auxiliary condition: for any group $g$, $\E[Y_{i,t}(0) | Y_{it-1}(0), \ldots, Y_{i1}(0), G_i=g] = \E[Y_{i,t}(0) | Y_{it-1}(0), G_i=g]$ (intuition: the right number of lags are included in the model).  Then,
 
@@ -682,7 +682,7 @@ Auxiliary condition: for any group $g$, $\E[Y_{i,t}(0) | Y_{it-1}(0), \ldots, Y_
 
 ## LOU Identification Explanation (cont'd) {visibility="uncounted"}
 
-Thus, we have that 
+Thus, we have that
 \begin{align*}
   ATT(g=2,t=3) &= \E[Y_{i3}|G_i=2] - \E[Y_{i3}(0) | G_i=2] \\
   &= \E[Y_{i3}|G_i=2] - \E[Y_{i3}(0) | G_i=2] \\
