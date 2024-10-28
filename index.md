@@ -6,7 +6,7 @@ theme: minima
 
 # Difference-in-Differences Course at the Bank of Portugal
 
-These are the materials for my Difference-in-Differences lecture at the Bank of Portugal, Oct. 28-31, 2024.
+These are the materials for my Difference-in-Differences workshop at the Bank of Portugal, Oct. 28-31, 2024.
 
 ## Introduction to Difference-in-Differences
 
