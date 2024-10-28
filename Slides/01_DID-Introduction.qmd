@@ -254,7 +254,7 @@ The <span style="color:red">second term</span> is how outcomes *would have chang
 * This is not directly observed in the data $\implies$ we need to make identifying assumptions
 
 * There are many possibilities here:
-    2. <span class="alert-blue">Lagged outcome unconfoundedness: </span> $\color{red}{\E[Y_{t=2}(0) - Y_{t=1}(0) | G=1]} = \E\Big[ \E[Y_{t=2}(0) | Y_{t=1}, G=0] - Y_{t=1}(0) \Big| G=1\Big]$
+    2. <span class="alert-blue">Lagged outcome unconfoundedness: </span> $\color{red}{\E[Y_{t=2}(0) - Y_{t=1}(0) | G=1]} = \E\Big[ \E[Y_{t=2}(0) - Y_{t=1}(0) | Y_{t=1}, G=0] \Big| G=1\Big]$
 
 ## How to Use Panel Data to Learn about $ATT$ {visibility="uncounted"}
 
