@@ -43,9 +43,7 @@ $\newcommand{\E}{\mathbb{E}}
 
     3. Application/Code for Minimum Wage Policy
 
-    4. Inference
-
-2. Relaxing the Parallel Trends Assumption
+2. Including Covariates in the Parallel Trends Assumption
 
 3. Common Extensions for Empirical Work
 
@@ -455,7 +453,7 @@ $\T$ time periods
 
 <span class="alert">Group-time average treatment effects</span>
 \begin{align*}
-  ATT(g,t) = \E[Y_{it}(g) - Y_{it}(0) | G=g]
+  ATT(g,t) = \E[Y_t(g) - Y_t(0) | G=g]
 \end{align*}
 
 Explanation: $ATT$ for group $g$ in time period $t$
