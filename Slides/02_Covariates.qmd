@@ -1157,7 +1157,7 @@ See @caetano-callaway-payne-santanna-2022 for more details about bad controls.
 ## Regression weights - more details {#reg-weights-more-details visibility="uncounted"}
 
 By construction, the regression weights balance the mean of $X$.  That is,
-$$ \E\Big[ w_1(X) g(X) \Big| D=1\Big] = \E\Big[ w_0(X) g(X) \Big| D=1 \Big] $$
+$$ \E\Big[ w_1(X) X \Big| D=1\Big] = \E\Big[ w_0(X) X \Big| D=1 \Big] $$
 
 . . .
 
