@@ -18,7 +18,7 @@ These are the materials for my Difference-in-Differences workshop at the Bank of
 
 [[Slides](02_Covariates.html)]
 
-[[Code](02_Covariates.R)]
+[[Code](02_Relaxing-Parallel-Trends.R)] 
 
 ## Coding Exercise 1
 
@@ -30,11 +30,11 @@ Applying DID techniques from parts 1 and 2 to job displacement data.
 
 [[R Solutions](Exercises/Exercise-1/exercise1_sol.html)] &nbsp; &nbsp; [[Stata Solutions](Exercises/Exercise-1/exercise1_sol_stata.html)] (Stata solutions were written by [Kyle Butts](https://www.kylebutts.com/) for Mixtape Sessions)
 
-## Part 3: Common Extensions for Empirical Work
+## Part 3: Common Extensions for Empirical Work 
 
-[[Slides](03_Extensions.html)]
+[[Slides](03_Odds_and_Ends.html)]
 
-[[Code](03_Extensions.R)] &nbsp; &nbsp; [[Honest DID Code](honest_did.R)]
+[[Code](03_Odds_and_Ends.R)] &nbsp; &nbsp; [[Honest DID Code](honest_did.R)]
 
 ## Part 4: More Complicated Treatment Regimes
 
