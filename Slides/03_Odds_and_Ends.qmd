@@ -183,7 +183,7 @@ ggdid(aggte(attgt_up, type="dynamic"))
 
 ```{r}
 #| echo: false
-#| code-line-numbers: "|2|3|8|12"
+#| code-line-numbers: "|1,2,3|8,12,13"
 set.seed(123)
 # randomly drop 100 observations
 this_data <- data2[sample(1:nrow(data2), nrow(data2)-100),]
@@ -199,11 +199,49 @@ attgt_up <- did::att_gt(yname="lemp",
 ggdid(aggte(attgt_up, type="dynamic"))
 ```
 
+## "Unbalanced Panel Data" in Min. Wage Ex.
+
+```{r}
+#| eval: false
+#| code-line-numbers: "|8,9"
+attgt_upd <- did::att_gt(yname="lemp",
+                         idname="id",
+                         gname="G",
+                         tname="year",
+                         data=this_data,
+                         control_group="nevertreated",
+                         base_period="universal",
+                         panel=TRUE,
+                         allow_unbalanced_panel=FALSE)
+ggdid(aggte(attgt_upd, type="dynamic"))
+```
+
+
+## "Unbalanced Panel Data" in Min. Wage Ex.
+
+```{r}
+#| echo: false
+#| code-line-numbers: "|8,9"
+attgt_upd <- did::att_gt(yname="lemp",
+                         idname="id",
+                         gname="G",
+                         tname="year",
+                         data=this_data,
+                         control_group="nevertreated",
+                         base_period="universal",
+                         panel=TRUE,
+                         allow_unbalanced_panel=FALSE)
+ggdid(aggte(attgt_upd, type="dynamic"))
+```
+
+
 # Alternative Comparison Groups
 
 ## Alternative Comparison Groups
 
 So far, we have used the [never-treated group]{.alert} as the comparison group.  But there are other possibilities:
+
+. . .
 
 1. [Not-yet-treated group]{.alert} - add not-yet-treated units (by period $t$) to never-treated units to form the comparison group.
     * This is a larger comparison group than never-treated (probably a good default option)
@@ -304,12 +342,14 @@ Anticipation occurs when treatments start affecting outcomes in periods before t
 * Ashenfelter's dip---for applications like job training, often people participate because they experience a shock to their labor market prospects
     * This can cause us to overestimate the treatment effect if the effects of the shock quickly dissipate (so outcomes would have recovered even without the treatment)
 
+. . .
+
 [Dealing with Anticipation:]{.alert}
 
 * Usually easy to deal with, as long as there is only "limited anticipation"
 
-* In particular, could assume that $Y_{it} = Y_{it}(0)$ for $t < G_i - a$, then the new base period is $g-a$ for group $g$, and
-    $$ATT(g,t) = \E[Y_t - Y_{g-a} | G=g] - \E[Y_t - Y_{g-a} | G=0]$$
+* In particular, could assume that $Y_{it} = Y_{it}(0)$ for $t < G_i - a$, then the new base period is $g-(a+1)$ for group $g$, and
+    $$ATT(g,t) = \E[Y_t - Y_{g-(a+1)} | G=g] - \E[Y_t - Y_{g-(a+1)} | G=0]$$
 
 ## Min. Wage with Anticipation
 
@@ -380,17 +420,17 @@ In either case, the information from pre-treatment periods is the same
 
 Choosing between different base periods comes down to the type of information that you would like the event study to highlight
 
-[The case for a varying base period:]{.alert}
+[The case for a universal base period:]{.alert}
 
 * Good option if you are mainly interested in highlighting long-run trend differences between groups
 * Also, heuristically, this can be better in cases where you have more periods
 
-[The case for a universal base period:]{.alert}
+[The case for a varying base period:]{.alert}
 
 * Good for highlighting anticipation
 * Good in cases where differences between groups "bounce around"
 * Pre-treatment estimates are easier to interpret
-* Heuristically, a good option with fewer periods
+<!--* Heuristically, a good option with fewer periods-->
 
 ## Min. Wage with Universal Base Period
 
@@ -575,9 +615,8 @@ The most well-known paper (well...to me) on sampling weights is @solon-haider-wo
 
 * If you have unit-level data (e.g., job displacement example) and there are sampling weights, use them
 
-* If you have aggregate data (e.g., county-level data), you could consider using a measure of the size of the unit (e.g., a county's population), then
-    * If your outcome is some kind of aggregate variable (e.g., total employment or log(total emploment)), then you should consider weighting by county size
-    * If your outcome is a rate / normalized per capita measure, then (tentatively) the case for weighting by county size is weaker
+* If you have aggregate data (e.g., county-level data), but you are interested in effects at level of underlying unit (e.g., person-level), then you should consider using sampling weights
+    * Possibly depends on nature of the outcome variable too: employment vs. log(employment) vs. per capita employment
 
 ## Sampling Weights in Min. Wage Example
 
@@ -630,7 +669,7 @@ attgt_er <- did::att_gt(yname="emp_rate",
                         data=data2,
                         control_group="nevertreated",
                         base_period="universal",
-                        weightsname=NULL)
+                        weightsname="avg_pop")
 ggdid(aggte(attgt_er, type="dynamic"))
 ```
 
@@ -648,11 +687,11 @@ attgt_er <- did::att_gt(yname="emp_rate",
                         data=data2,
                         control_group="nevertreated",
                         base_period="universal",
-                        weightsname=NULL)
+                        weightsname="avg_pop")
 ggdid(aggte(attgt_er, type="dynamic"))
 ```
 
-## Replace log(Employment) with Employment Rate
+<!--## Replace log(Employment) with Employment Rate
 
 ```{r}
 #| eval: false
@@ -685,6 +724,8 @@ attgt_erv <- did::att_gt(yname="emp_rate",
                          weightsname=NULL)
 ggdid(aggte(attgt_erv, type="dynamic"))
 ```
+
+-->
 
 # Inference / Clustered Standard Errors {visibility="uncounted"}
 
@@ -702,7 +743,7 @@ There are a number of complications that can arise for inference in DID settings
 
 5. Small number of treated units
 
-. . .
+## Examples
 
 We will walk through a few leading examples:
 
@@ -730,6 +771,8 @@ Sample consists of:
 $$\{Y_{i1}, Y_{i2}, \ldots, Y_{iT}, D_{i1}, D_{i2}, \ldots D_{iT} \}_{i=1}^n$$
 
 which are iid across units, drawn from a "super-population", and where the number of units in each group is "large".  This is a common sampling scheme in panel data applications (e.g., job displacement).
+
+. . .
 
 This sampling scheme allows for outcomes to be arbitrarily correlated across time periods.
 
@@ -884,6 +927,14 @@ attgt_poi <- did::att_gt(yname="lemp",
                          base_period="varying",
                          cband=FALSE)
 ggdid(aggte(attgt_poi,type="dynamic",cband=FALSE))
+```
+
+## Min. Wage w/ uniform confidence bands
+
+```{r}
+# critical value for uniform confidence band
+# computed using resamplin
+attgt$c
 ```
 
 # Appendix {visibility="uncounted"}
