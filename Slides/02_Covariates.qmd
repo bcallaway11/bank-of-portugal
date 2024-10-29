@@ -542,7 +542,7 @@ where $\mathbf{X}_i := (X_{i1},X_{i2},\ldots,X_{iT})$.
 
 Under this assumption, using similar arguments to the ones above, one can show that
 
-$$ATT(g,t) = \E\left[ \left( \frac{\indicator{G=g}}{p_g} - \frac{p_g(\mathbf{X},Z)U}{(1-p_g(\mathbf{X},Z))p_g}\right)\Big(Y_{t} - Y_{g-1} - m_{gt}^0(\mathbf{X},Z)\Big) \right]$$
+$$ATT(g,t) = \E\left[ \left( \frac{\indicator{G=g}}{\pi_g} - \frac{p_g(\mathbf{X},Z)U}{(1-p_g(\mathbf{X},Z))\pi_g}\right)\Big(Y_{t} - Y_{g-1} - m_{gt}^0(\mathbf{X},Z)\Big) \right]$$
 
 where $p_g(\mathbf{X},Z) := \P(G=g|\mathbf{X},Z,\indicator{G=g}+U=1)$ and $m_{gt}^0(\mathbf{X},Z) := \E[Y_{t}-Y_{g-1}|\mathbf{X},Z,U=1]$.
 
@@ -942,7 +942,7 @@ cs_x_dyn <- aggte(cs_x, type="dynamic")
 ggdid(cs_x_dyn)
 ```
 
-# Check covariate balance
+## Check covariate balance
 
 ```{r}
 # similar code as before...check course materials
@@ -969,6 +969,9 @@ ggtwfeweights(aipw_cov_bal, absolute_value = FALSE,
   xlim(c(-1,1))
 ```
 
+## Discussion
+
+If you want to include covariates in the parallel trends assumption, it is better to use approaches that directly include the covariates relative to estimation strategies that transform the covariates
 
 # Covariates Affected by the Treatment {#bad-controls-details visibility="uncounted"}
 
@@ -996,7 +999,7 @@ You can see a [tension]{.alert} here:
 
 ## Covariates Affected by the Treatment
 
-The most common practice is to just completely drop these covariates from the analysis, but there are alternatives
+The most common practice is to just completely drop these covariates from the analysis
 
 * Not clear if this is the right idea though...
 
@@ -1013,7 +1016,7 @@ To wrap our heads around this, let's go back to the case with two time periods.
 Define treated and untreated [potential covariates]{.alert}: $X_{it}(1)$ and $X_{it}(0)$.  Notice that in the "textbook" two period setting, we observe
 $$X_{i,t=2} = D_i X_{i,t=2}(1) + (1-D_i) X_{i,t=2}(0) \qquad \textrm{and} \qquad X_{i,t=1} = X_{i,t=1}(0)$$
 
-If the covariates are literally not affected by the treatment at all, then we can write the version of conditional parallel trends that we have been using above in terms of potential outcomes:
+Then, we will consider parallel trends in terms of untreated potential outcomes and untreated potential covariates:
 
 <br>
 
@@ -1024,6 +1027,22 @@ $$\E[\Delta Y(0) | X_{t=2}(0), X_{t=1}(0), Z, D=1] = \E[\Delta Y(0) | X_{t=2}(0)
 :::
 
 <br>
+
+## Identification Issues
+
+Following the same line of argument as before, it follows that
+
+$$ATT = \E[\Delta Y | D=1] - \E\Big[ \E[\Delta Y(0) | X_{t=2}(0), X_{t=1}(0), Z, D=0] \Big| D=1\Big]$$
+
+The second term is the tricky one.  Notice that:
+
+* The inside conditional expectation is identified &mdash; we see untreated potential outcomes and covariates for the untreated group
+
+* However, we cannot average over $X_{t=2}(0)$ for the treated group, because we don't observe $X_{t=2}(0)$ for the treated group
+
+. . .
+
+There are several options for what we can do &nbsp; $\rightarrow$
 
 ## Option 1: Ignore
 
@@ -1106,15 +1125,15 @@ $$\E[\Delta Y(0) | X_{t=1}(0), Z, D=1] = \E[\Delta Y(0) |  X_{t=1}(0), Z, D=0]$$
 
 ## Option 4: Extra Assumptions
 
-Going back to the original conditional parallel trends assumption (that include both $X_{i,t=2}(0)$ and $X_{i,t=1}(0)$)...Using the same sort of arguments as for regression adjustment earlier, it follows that
+Another option is to keep the original identifying assumption, but add additional assumptions where we (in some sense) treat $X_t$ as an outcome and as a covariate.
+
+Recall:
 
 $$ATT = \E[\Delta Y | D=1] - \E\Big[ \E[\Delta Y(0) | X_{t=2}(0), X_{t=1}(0), Z, D=0] \Big| D=1\Big]$$
 
-The second term is the tricky one.  Notice that:
+. . .
 
-* The inside conditional expectation is identified &mdash; we see untreated potential outcomes and covariates for the untreated group
-
-* But the outside expectation is infeasible $\implies$ we are stuck (Option 4a)
+If we could figure out distribution of $X_{t=2}(0)$ for the treated group, we could recover $ATT$
 
 ## Option 4: Dealing with $X_{t=2}(0)$
 
@@ -1175,7 +1194,7 @@ $$ \E\Big[ w_1(X) X^2 \Big| D=1\Big] \overset{?}{=} \E\Big[ w_0(X) X^2 \Big| D=1
 
 To understand double robustness, we can rewrite the expression for $ATT$ as
 \begin{align*}
-  ATT = \E\left[ \frac{D}{p} \Big(\Delta Y - m_0(X)\Big) \right] - \E\left[ \frac{p(X)(1-D)}{(1-p(X))p} \Big(\Delta Y - m_0(X)\Big)\right]
+  ATT = \E\left[ \frac{D}{\pi} \Big(\Delta Y - m_0(X)\Big) \right] - \E\left[ \frac{p(X)(1-D)}{(1-p(X))\pi} \Big(\Delta Y - m_0(X)\Big)\right]
 \end{align*}
 
 The first term is exactly the same as what comes from regression adjustment
