@@ -737,29 +737,35 @@ There are a number of complications that can arise for inference in DID settings
 
 2. Fixed population inference
 
-3. Clustered treatment assignment
+3. Small number of treated units
 
-4. Multiple hypothesis testing
+4. Clustered treatment assignment
 
-5. Small number of treated units
+5. Multiple hypothesis testing
 
 ## Examples
 
-We will walk through a few leading examples:
+Different issues related to inference arise given different types of data, all of which are common in DID applications.
+
+. . .
+
+Here are a few leading examples:
 
 1. Unit-level treatments, units sampled from a large population.
 
     * Example: Job displacement
 
-2. Aggregate treatments, underlying unit-level data available
-
-    * Example: State level policies studied with individual- or county-level data.
-
-3. Aggregate treatments, aggregate data available
+2. Aggregate treatments, aggregate data
 
     * Example: State-level policy, studied with state-level data
 
     * Also: try to answer the question what happens if you observe the entire population?
+
+3. Aggregate treatments, underlying unit-level data
+
+    * Example: State level policies studied with individual- or county-level data.
+
+
 
 
 ## Serial Correlation
@@ -803,6 +809,19 @@ One possibility is to condition on (i.e., treat as fixed/non-random) $(G_i, \the
 * Adjusted parallel trends: mean of finite sample parallel trends across repeated samples $$\frac{1}{n_g} \sum_{G_i=g} \E[\Delta Y_{t}(0) | G_i=g] - \frac{1}{n_\infty} \sum_{G_i=\infty} \E[\Delta Y_{t}(0) | U_i=1]$$
 
 $\implies$ somewhat different interpretation, but use same $\widehat{ATT}$ and constructing unconditional standard errors (i.e., same as before) can be conservative in this case.  See @borusyak-jaravel-spiess-2024, for example.
+
+## Few Treated Clusters with Aggregate Data
+
+What if the number of treated units is small (e.g., 1 treated unit)? <!-- similar argument with 1 cluster-->
+
+In this case, if there is one treated unit, we can often come up with an unbiased (though not consistent) estimator of the $ATT$.
+
+For inference, there are a number of ideas, often involving some kind of permutation test
+
+* See, for example, @conley-taber-2011, @ferman-2019, @hagemann-2019, @roth-santanna-2023b for examples
+
+* These approaches often require auxiliary assumptions such as restrictions on heteroskedasiticity or differences in cluster sizes
+
 
 ## Clustered Treatment Assignment
 
@@ -857,18 +876,6 @@ In my view, there is a fairly strong case for (in many applications) using tight
 * researcher legwork
 
 * pre-testing
-
-## Few Treated Clusters with Aggregate Data
-
-The discussion above supposed that we had access to underlying unit-level data.  What if we only have access to aggregate data, such as state-level data, and the number of treated clusters is small (e.g., 1 treated cluster)?
-
-In this case, if there is one treated unit, we can often come up with an unbiased (though not consistent) estimator of the $ATT$.
-
-For inference, there are a number of ideas, often involving some kind of permutation test
-
-* See, for example, @conley-taber-2011, @ferman-2019, @hagemann-2019, @roth-santanna-2023b for examples
-
-* These approaches often require auxiliary assumptions such as restrictions on heteroskedasiticity or differences in cluster sizes
 
 ## Further Reading on Clustering
 
