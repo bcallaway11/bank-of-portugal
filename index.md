@@ -18,7 +18,7 @@ These are the materials for my Difference-in-Differences workshop at the Bank of
 
 [[Slides](02_Covariates.html)]
 
-[[Code](02_Relaxing-Parallel-Trends.R)] 
+[[Code](02_Relaxing-Parallel-Trends.R)]
 
 ## Coding Exercise 1
 
@@ -30,7 +30,7 @@ Applying DID techniques from parts 1 and 2 to job displacement data.
 
 [[R Solutions](Exercises/Exercise-1/exercise1_sol.html)] &nbsp; &nbsp; [[Stata Solutions](Exercises/Exercise-1/exercise1_sol_stata.html)] (Stata solutions were written by [Kyle Butts](https://www.kylebutts.com/) for Mixtape Sessions)
 
-## Part 3: Common Extensions for Empirical Work 
+## Part 3: Common Extensions for Empirical Work
 
 [[Slides](03_Odds_and_Ends.html)]
 
@@ -77,6 +77,8 @@ This is the main data used during the workshop.
 * **Main subset of data used in workshop** [data2.RData](data2.RData) &nbsp; [data2.dta](data2.dta)
 
 * **Alternative subset of data mentioned in workshop** [data3.RData](data3.RData) &nbsp; [data3.dta](data3.dta)
+
+* **Data with more years used for IFE** [mw_data_ch_more_years2.RData](mw_data_ch_more_years2.RData)
 
 ## Additional Materials
 
